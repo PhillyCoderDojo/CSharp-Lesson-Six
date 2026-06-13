@@ -9,11 +9,21 @@ CSharp-Lesson-Six/
 ├── .git/
 ├── .gitignore
 ├── CSharp-Lesson-Six.csproj
+├── BankAccount.cs   ← you will create this in Step 3
 └── Program.cs
 ```
 
 ## How to use the code snippets
-Each step below shows the **complete contents** of `Program.cs` after you finish that step. When a step says "replace your `Program.cs` with this", select all (Ctrl+A / Cmd+A) inside `Program.cs`, delete it, then paste the new code. That keeps you from ending up with two `Main` methods or leftover code from earlier steps.
+This lesson uses **two C# files**: `BankAccount.cs` holds the class, and `Program.cs` holds the `Main` method that uses it. Most steps only change one file at a time — the step header tells you which one.
+
+When a step says "replace `BankAccount.cs` with this" or "replace `Program.cs` with this", click inside that file, select all (Ctrl+A / Cmd+A), delete it, then paste the new code. Keeping the class in its own file means you will never accidentally end up with two `Main` methods or leftover starter code mixed in with your class.
+
+### How to create a new C# file in Rider 🛠️
+You only need to do this once, in Step 3, to make `BankAccount.cs`:
+1. In the **Solution Explorer** on the left, right-click the `CSharp-Lesson-Six` project (the one with the little C# icon, not the outer folder).
+2. Choose **Add → Class…**
+3. Type `BankAccount` for the name and press Enter.
+4. Rider creates `BankAccount.cs` with an empty class. Select all (Ctrl+A / Cmd+A), delete it, then paste the Step 3 snippet below.
 
 ## Step-by-Step Build Guide
 
@@ -31,10 +41,10 @@ Each step below shows the **complete contents** of `Program.cs` after you finish
 - **Why it matters**: Time to master properties and methods!
 - **Git command**: None
 
-### 3. Create Basic Account Class 🏦
-- **What to do**: Replace your `Program.cs` with the code below. It adds a simple `BankAccount` class with two public fields and a constructor.
-- **File(s) touched**: Program.cs
-- **Code snippet** (full file):
+### 3. Create the BankAccount Class in Its Own File 🏦
+- **What to do**: First, create a brand-new file called `BankAccount.cs` using the **"How to create a new C# file in Rider"** steps above. Paste the `BankAccount.cs` snippet below into it. Then open the existing `Program.cs`, select all, and replace it with the `Program.cs` snippet — this swaps the starter `Console.WriteLine("Hello, World!");` for a real `Main` method that uses your new class.
+- **File(s) touched**: BankAccount.cs (new), Program.cs
+- **Code snippet for `BankAccount.cs`** (full file):
 ```csharp
 namespace CSharp_Lesson_Six;
 
@@ -50,6 +60,10 @@ class BankAccount
         Console.WriteLine($"Account created for {Owner} with ${Balance}");
     }
 }
+```
+- **Code snippet for `Program.cs`** (full file):
+```csharp
+namespace CSharp_Lesson_Six;
 
 class Program
 {
@@ -60,13 +74,13 @@ class Program
     }
 }
 ```
-- **Why it matters**: Start with simple fields before adding protection
-- **Git command**: `git add . && git commit -m "Create basic BankAccount class"`
+- **Why it matters**: One class per file is how real C# projects are organized — and it stops the two-`Main`-methods bug before it can happen.
+- **Git command**: `git add . && git commit -m "Create basic BankAccount class in its own file"`
 
 ### 4. Add Methods for Account Actions 💰
-- **What to do**: Replace your `Program.cs` with the version below. The account can now `Deposit` and `Withdraw`, and `Main` calls both.
-- **File(s) touched**: Program.cs
-- **Code snippet** (full file):
+- **What to do**: Replace `BankAccount.cs` with the version below — it adds `Deposit` and `Withdraw` methods. Then replace `Program.cs` so `Main` calls both new methods.
+- **File(s) touched**: BankAccount.cs, Program.cs
+- **Code snippet for `BankAccount.cs`** (full file):
 ```csharp
 namespace CSharp_Lesson_Six;
 
@@ -108,6 +122,10 @@ class BankAccount
         }
     }
 }
+```
+- **Code snippet for `Program.cs`** (full file):
+```csharp
+namespace CSharp_Lesson_Six;
 
 class Program
 {
@@ -124,9 +142,9 @@ class Program
 - **Git command**: `git add . && git commit -m "Add Deposit and Withdraw methods"`
 
 ### 5. Convert Fields to Properties 🔒
-- **What to do**: Replace your `Program.cs` with the version below. `Owner` is now an auto-property and `Balance` has a backing field with a **private setter** — so only `BankAccount` methods can change the balance.
-- **File(s) touched**: Program.cs
-- **Code snippet** (full file):
+- **What to do**: Replace `BankAccount.cs` with the version below. `Owner` is now an auto-property and `Balance` has a backing field with a **private setter** — so only `BankAccount`'s own methods can change the balance. `Program.cs` does not change in this step.
+- **File(s) touched**: BankAccount.cs
+- **Code snippet for `BankAccount.cs`** (full file):
 ```csharp
 namespace CSharp_Lesson_Six;
 
@@ -174,25 +192,14 @@ class BankAccount
         }
     }
 }
-
-class Program
-{
-    static void Main(string[] args)
-    {
-        BankAccount account = new BankAccount("Alex", 100.00);
-        account.Deposit(50.00);
-        account.Withdraw(25.00);
-        Console.WriteLine($"{account.Owner} now has ${account.Balance}");
-    }
-}
 ```
 - **Why it matters**: Properties control who can read/write data
 - **Git command**: `git add . && git commit -m "Convert balance to protected property"`
 
 ### 6. Add Advanced Property Validation 🛡️
-- **What to do**: Replace your `Program.cs` with the version below. `Owner` is now a full property with a backing field `_owner`, and the setter cleans up empty/whitespace names.
-- **File(s) touched**: Program.cs
-- **Code snippet** (full file):
+- **What to do**: Replace `BankAccount.cs` with the version below. `Owner` is now a full property with a backing field `_owner`, and the setter cleans up empty/whitespace names. `Program.cs` still does not change.
+- **File(s) touched**: BankAccount.cs
+- **Code snippet for `BankAccount.cs`** (full file):
 ```csharp
 namespace CSharp_Lesson_Six;
 
@@ -255,17 +262,6 @@ class BankAccount
         {
             Console.WriteLine("Invalid withdrawal amount!");
         }
-    }
-}
-
-class Program
-{
-    static void Main(string[] args)
-    {
-        BankAccount account = new BankAccount("Alex", 100.00);
-        account.Deposit(50.00);
-        account.Withdraw(25.00);
-        Console.WriteLine($"{account.Owner} now has ${account.Balance}");
     }
 }
 ```
@@ -273,73 +269,11 @@ class Program
 - **Git command**: `git add . && git commit -m "Add validation to Owner property"`
 
 ### 7. Build Complete Banking System 🏛️
-- **What to do**: Replace your `Program.cs` with the version below. `Main` now creates a `BankAccount[]` array (one with an empty owner to test the validation), runs deposits and withdrawals (some invalid), and prints final balances.
+- **What to do**: This step only changes `Program.cs`. Replace it with the version below — `Main` now creates a `BankAccount[]` array (one with an empty owner to test the validation), runs deposits and withdrawals (some invalid), and prints final balances. `BankAccount.cs` stays exactly the same as Step 6.
 - **File(s) touched**: Program.cs
-- **Code snippet** (full file):
+- **Code snippet for `Program.cs`** (full file):
 ```csharp
 namespace CSharp_Lesson_Six;
-
-class BankAccount
-{
-    private string _owner;
-    private double _balance;
-
-    public string Owner
-    {
-        get { return _owner; }
-        set
-        {
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                Console.WriteLine("Owner name cannot be empty!");
-                _owner = "Unknown Owner";
-            }
-            else
-            {
-                _owner = value.Trim();
-            }
-        }
-    }
-
-    public double Balance
-    {
-        get { return _balance; }
-        private set { _balance = value; }
-    }
-
-    public BankAccount(string owner, double startingBalance)
-    {
-        Owner = owner;
-        _balance = startingBalance >= 0 ? startingBalance : 0;
-        Console.WriteLine($"Account created for {Owner} with ${Balance}");
-    }
-
-    public void Deposit(double amount)
-    {
-        if (amount > 0)
-        {
-            Balance += amount;
-            Console.WriteLine($"Deposited ${amount}. New balance: ${Balance}");
-        }
-        else
-        {
-            Console.WriteLine("Deposit amount must be positive!");
-        }
-    }
-
-    public void Withdraw(double amount)
-    {
-        if (amount > 0 && amount <= Balance)
-        {
-            Balance -= amount;
-            Console.WriteLine($"Withdrew ${amount}. New balance: ${Balance}");
-        }
-        else
-        {
-            Console.WriteLine("Invalid withdrawal amount!");
-        }
-    }
-}
 
 class Program
 {
@@ -374,9 +308,9 @@ class Program
 - **Git command**: `git add . && git commit -m "Create complete banking system demo"`
 
 ### 8. Add Account Summary Method 📊
-- **What to do**: Replace your `Program.cs` with the version below. `BankAccount` gains two more methods — `ShowAccountSummary()` prints a formatted block, and `CanAfford()` reports whether a withdrawal would be allowed. `Main` calls them at the end.
-- **File(s) touched**: Program.cs
-- **Code snippet** (full file):
+- **What to do**: Replace `BankAccount.cs` with the version below — it gains two more methods: `ShowAccountSummary()` prints a formatted block, and `CanAfford()` reports whether a withdrawal would be allowed. Then replace `Program.cs` so `Main` calls them at the end.
+- **File(s) touched**: BankAccount.cs, Program.cs
+- **Code snippet for `BankAccount.cs`** (full file):
 ```csharp
 namespace CSharp_Lesson_Six;
 
@@ -455,6 +389,10 @@ class BankAccount
         return amount > 0 && amount <= Balance;
     }
 }
+```
+- **Code snippet for `Program.cs`** (full file):
+```csharp
+namespace CSharp_Lesson_Six;
 
 class Program
 {
@@ -502,16 +440,19 @@ class Program
 - **Expected output** after Step 8: three "Account created" messages (with the empty-owner one printing the validation warning and becoming "Unknown Owner"), a list of account activity (some succeeding, the $1000 withdrawal and $-10 deposit both failing), an account-summary block per account, and a "Can Alice afford a $400 withdrawal? True" line.
 
 ### Common errors and fixes
-- **"Type 'Program' already defines a member called 'Main'"** — You have two `Main` methods. Make sure you replaced the whole file at each step instead of pasting on top of the old code. There should be exactly one `static void Main(string[] args)` in `Program.cs`.
-- **"The entry point of the program is global code; ignoring 'Main(string[])' entry point"** — Same root cause: there's a stray line of code outside any method (often a leftover `Console.WriteLine("Hello, World!");` from the starter). Delete anything outside the `class BankAccount { ... }` and `class Program { ... }` braces.
+- **"The name 'BankAccount' does not exist in the current context"** — `Program.cs` cannot see your class. Check that `BankAccount.cs` is in the same project folder as `Program.cs` (you should see it listed in the Solution Explorer under the `CSharp-Lesson-Six` project) and that both files start with `namespace CSharp_Lesson_Six;`.
+- **"Type 'Program' already defines a member called 'Main'"** — You pasted the `Program.cs` snippet on top of itself instead of replacing the file's contents. Select all (Ctrl+A / Cmd+A) inside `Program.cs`, delete everything, then paste once. There should be exactly one `static void Main(string[] args)` in `Program.cs` and zero in `BankAccount.cs`.
+- **"The entry point of the program is global code; ignoring 'Main(string[])' entry point"** — A stray line of code is sitting outside any class — often a leftover `Console.WriteLine("Hello, World!");` from the starter `Program.cs`. Make sure every line in `Program.cs` is *inside* either `class Program { ... }` or `static void Main(string[] args) { ... }`.
 - **"The property or indexer 'BankAccount.Balance' cannot be used in this context because the set accessor is inaccessible"** — You tried to set `Balance` from outside the `BankAccount` class (for example from inside `Main`). After Step 5 the setter is `private` — only `BankAccount`'s own methods can change `Balance`. Use `Deposit` or `Withdraw` instead.
 - **"Cannot access private field"** — You tried to read or write `_balance` from outside `BankAccount`. Use the public `Balance` property instead.
 
 ## Bonus Challenge 🔥
-Create a `Student` class with grade validation!
+Create a `Student` class with grade validation — and put it in its **own new file** called `Student.cs` (use the same "Add → Class…" trick from Step 3).
 
-**Hint**:
+**Hint** (paste into `Student.cs`):
 ```csharp
+namespace CSharp_Lesson_Six;
+
 class Student
 {
     private double _gpa;
